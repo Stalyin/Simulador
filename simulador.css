@@ -465,6 +465,10 @@ input::placeholder {
   }
 }
 
+.hero-mobile {
+  display: none;
+}
+
 .simulator__mobile {
   display: none;
 }
@@ -589,6 +593,15 @@ input::placeholder {
     padding: 34px 16px 50px;
   }
 
+  .hero-mobile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: -90px;
+    && img {
+      width: 300px;
+    }
+  }
+
   .hero__head {
     margin-bottom: 22px;
   }
@@ -607,6 +620,7 @@ input::placeholder {
 
   .simulator__mobile {
     display: block;
+    position: relative;
   }
 
   .result-item {
@@ -619,6 +633,10 @@ input::placeholder {
 }
 
 @media (max-width: 760px) {
+  .pill {
+    display: none;
+  }
+
   .hero__head h1 {
     font-size: 30px;
   }
