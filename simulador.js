@@ -18,6 +18,15 @@ function calcular() {
   let totalPrestamo = calcularTotalPagar(montoSolicitado, montoInteres);
   let cuotaMensual = calcularCuotaMensual(totalPrestamo, plazoAnios);
 
+  // Estado de credito
+  let analizarEstado = aprobarCredito(capacidadPago, cuotaMensual);
+
+  if (analizarEstado === true) {
+    mostrarEnPantalla("spnEstadoCredito", "CRÉDITO APROBADO");
+  } else {
+    mostrarEnPantalla("spnEstadoCredito", "CRÉDITO RECHAZADO");
+  }
+
   mostrarEnPantalla("spnDisponible", disponible.toFixed(2));
   mostrarEnPantalla("spnCapacidadPago", capacidadPago.toFixed(2));
   mostrarEnPantalla("spnInteresPagar", montoInteres.toFixed(2));
