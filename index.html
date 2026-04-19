@@ -1,49 +1,241 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Crédito</title>
-    <link rel="stylesheet" href="simulador.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulador de Crédito</title>
+  <link rel="stylesheet" href="simulador.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="shortcut icon" href="./images/favicon.png" type="image/png">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Simulador de Crédito</h1>
-
-        <h2>Datos financieros</h2>
-        <label for="txtIngresos">Ingresos:</label>
-        <input type="text" id="txtIngresos">
-
-        <label for="txtEgresos">Egresos:</label>
-        <input type="text" id="txtEgresos">
-
-        <p>Disponible: <span id="spnDisponible"></span></p>
-        <p>Capacidad de pago mensual: <span id="spnCapacidadPago"></span></p>
-
-        <h2>Solicitud de crédito</h2>
-        <label for="txtMonto">Monto:</label>
-        <input type="text" id="txtMonto">
-
-        <label for="txtPlazo">Plazo en años:</label>
-        <input type="text" id="txtPlazo">
-
-        <label for="txtTasaInteres">Tasa de interés:</label>
-        <input type="text" id="txtTasaInteres">
-
-        <p>Interés a pagar: <span id="spnInteresPagar"></span></p>
-        <p>Total préstamo: <span id="spnTotalPrestamo"></span></p>
-        <p>Cuota mensual: <span id="spnCuotaMensual"></span></p>
-        <p>Estado de crédito: <span id="spnEstadoCredito">ANALIZANDO...</span></p>
-
-        <div class="buttons">
-            <button id="btnCalcularCredito" onclick="calcular();">Calcular Crédito</button>
-            <button id="btnReiniciar">Reiniciar</button>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="topbar__inner">
+        <div class="logo">
+            <img src="./images/logo.png" alt="">
         </div>
-    </div>
 
-    <script src="funciones.js"></script>
-    <script src="simulador.js"></script>
+        <nav class="nav-desktop">
+          <a href="#">Inicio</a>
+          <a href="#">Simulador</a>
+          <a href="#">Contacto</a>
+        </nav>
 
+        <div class="topbar__actions">
+          <button class="btn btn--ghost" type="button">Ayuda</button>
+          <button class="btn btn--dark" type="button">Crédito</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="hero">
+      <section class="hero__head">
+        <span class="pill">Hecho por: Cristian Peña</span>
+        <h1>SIMULA TU CRÉDITO</h1>
+        <p>
+          Calcula tu capacidad de pago, estima tu cuota mensual
+          y revisa el estado de tu solicitud de forma clara.
+        </p>
+      </section>
+
+      <section class="simulator">
+        <!-- Desktop / Tablet -->
+        <div class="simulator__desktop">
+          <div class="loan-card">
+            <div class="loan-card__left">
+              <div class="panel">
+                <h2>Datos financieros</h2>
+
+                <label for="txtIngresos">Ingresos mensuales</label>
+                <input type="number" id="txtIngresos" placeholder="Ej: 1200" />
+
+                <label for="txtEgresos">Egresos mensuales</label>
+                <input type="number" id="txtEgresos" placeholder="Ej: 450" />
+
+                <div class="panel-divider"></div>
+
+                <h2>Solicitud de crédito</h2>
+
+                <label for="txtMonto">Monto solicitado</label>
+                <input type="number" id="txtMonto" placeholder="Ej: 5000" />
+
+                <label for="txtPlazo">Plazo</label>
+                <div class="select-wrap">
+                <select id="txtPlazo">
+                    <option value="1">1 año</option>
+                    <option value="2">2 años</option>
+                    <option value="3">3 años</option>
+                    <option value="4">4 años</option>
+                    <option value="5" selected>5 años</option>
+                </select>
+                </div>
+
+                <label for="txtTasaInteres">Tasa de interés anual (%)</label>
+                <input type="number" id="txtTasaInteres" placeholder="Ej: 5.99" step="0.01" />
+
+                <div class="button-row">
+                  <button id="btnCalcularCredito" class="btn btn--outline btn--full" type="button" onclick="calcular();">
+                    Calcular
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="loan-card__right">
+              <div class="result-card">
+                <h3>Tu cuota mensual estimada</h3>
+                <div class="result-card__main" id="spnCuotaMensual">$0.00</div>
+
+                <div class="result-list">
+                  <div class="result-item">
+                    <span>Disponible</span>
+                    <strong id="spnDisponible">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Capacidad de pago</span>
+                    <strong id="spnCapacidadPago">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Interés a pagar</span>
+                    <strong id="spnInteresPagar">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Total préstamo</span>
+                    <strong id="spnTotalPrestamo">$0.00</strong>
+                  </div>
+
+                  </div>
+
+                 <div class="info-box info-box--analizando" id="boxEstadoCredito">
+                    Estado del crédito: <strong id="spnEstadoCredito">ANALIZANDO</strong>
+                 </div>
+
+
+
+                <button id="btnReiniciar" onclick="reiniciar();" class="btn btn--dark btn--full" type="button">
+                  Otra simulación
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile step by step -->
+        <div class="simulator__mobile">
+          <div class="mobile-steps">
+            <div class="mobile-step is-active" data-step="1" id="step1">
+              <div class="mobile-card">
+                <div class="mobile-card__header">
+                  <span class="step-badge">Paso 1</span>
+                  <h2>Datos financieros</h2>
+                  <p>Ingresa tus valores mensuales.</p>
+                </div>
+
+                <label for="mTxtIngresos">Ingresos mensuales</label>
+                <input type="number" id="mTxtIngresos" placeholder="Ej: 1200" />
+
+                <label for="mTxtEgresos">Egresos mensuales</label>
+                <input type="number" id="mTxtEgresos" placeholder="Ej: 450" />
+
+                <button class="btn btn--dark btn--full" type="button" onclick="irPaso(2)">
+                  Siguiente
+                </button>
+              </div>
+            </div>
+
+            <div class="mobile-step" data-step="2" id="step2">
+              <div class="mobile-card">
+                <div class="mobile-card__header">
+                  <span class="step-badge">Paso 2</span>
+                  <h2>Solicitud de crédito</h2>
+                  <p>Ingresa el crédito que deseas simular.</p>
+                </div>
+
+                <label for="mTxtMonto">Monto solicitado</label>
+                <input type="number" id="mTxtMonto" placeholder="Ej: 5000" />
+
+                <label for="mTxtPlazo">Plazo en años</label>
+                <div class="stepper">
+                  <button type="button" onclick="cambiarPlazo(-1)">−</button>
+                  <input type="text" id="mTxtPlazo" value="5 años" readonly />
+                  <button type="button" onclick="cambiarPlazo(1)">+</button>
+                </div>
+                <input type="hidden" id="mTxtPlazoValor" value="5" />
+
+                <label for="mTxtTasaInteres">Tasa de interés anual (%)</label>
+                <input type="number" id="mTxtTasaInteres" placeholder="Ej: 5.99" step="0.01" />
+
+                <div class="button-row mobile-actions">
+                  <button class="btn btn--outline" type="button" onclick="irPaso(1)">
+                    Atrás
+                  </button>
+                  <button class="btn btn--dark" type="button" onclick="calcularMobile()">
+                    Calcular
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mobile-step" data-step="3" id="step3">
+              <div class="mobile-results">
+                <div class="mobile-main-result">
+                  <span>Cuota mensual estimada</span>
+                  <strong id="mSpnCuotaMensual">$0.00</strong>
+                </div>
+
+                <div class="mobile-card mobile-card--results">
+                  <h2>Datos financieros</h2>
+
+                  <div class="result-item">
+                    <span>Disponible</span>
+                    <strong id="mSpnDisponible">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Capacidad de pago</span>
+                    <strong id="mSpnCapacidadPago">$0.00</strong>
+                  </div>
+                </div>
+
+                <div class="mobile-card mobile-card--results">
+                  <h2>Resultados del crédito</h2>
+
+                  <div class="result-item">
+                    <span>Interés a pagar</span>
+                    <strong id="mSpnInteresPagar">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Total préstamo</span>
+                    <strong id="mSpnTotalPrestamo">$0.00</strong>
+                  </div>
+
+                  <div class="result-item ">
+                    <span>Estado del crédito</span>
+                    <strong id="mSpnEstadoCredito">ANALIZANDO...</strong>
+                  </div>
+                </div>
+
+                <button class="btn btn--dark btn--full" type="button" onclick="reiniciarMobile()">
+                  Otra simulación
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="funciones.js"></script>
+  <script src="simulador.js"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+-Como experto en programación y diseño UX/UI vamos a mejorar la interfaz de la siguiente manera, navbar con apartado para logo, navlink, y contacto, en el body colocaremos un badge Simulador Financiero, Titulo, descripcion y continuaremos con un contenedor del Simulador, para desktop lo dividiremos en dos secciones, lado izquierdo con datos financieros y credito, y lado derecho con los resultados del cálculo.
+
+-Cambiemos el input de Plazo para que funcione con un select
+-Creemos un diseño mobile responsivo a partir de nuestra base nueva, para una interfaz limpia y amigable en HTML haremos una estructura para step, y asi tener pasos y llegar al calculo, el primer step tendra los datos financieros, el segundo step la solicitud de credito y el ultimo contendra los valores del calculo donde primero nos mostrara una card con la cuota mensual, seguido de los datos financieros y por ultimo los resultados del credito.
+
