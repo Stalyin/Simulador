@@ -18,3 +18,15 @@ function calcularInteresSimple(monto, tasa, plazoAnios) {
   let valorInteres = (plazoAnios * monto * tasa) / 100;
   return valorInteres;
 }
+
+function calcularTotalPagar(monto, interes) {
+  let solca = 100;
+  let totalPago = monto + interes + solca;
+
+  return totalPago;
+}
+
+function calcularCuotaMensual(total, plazoAnios) {
+  let valorMensual = total / (plazoAnios * 12);
+  return valorMensual;
+}

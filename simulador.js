@@ -1,8 +1,8 @@
 function calcular() {
   let ingresos = obtenerValores("txtIngresos");
   let egresos = obtenerValores("txtEgresos");
-  let disponible = calcularDisponible(ingresos, egresos).toFixed(2);
-  let capacidadPago = calcularCapacidadPago(disponible).toFixed(2);
+  let disponible = calcularDisponible(ingresos, egresos);
+  let capacidadPago = calcularCapacidadPago(disponible);
 
   // Solicitud de crédito
   let montoSolicitado = obtenerValorEntero("txtMonto");
@@ -13,11 +13,16 @@ function calcular() {
     montoSolicitado,
     plazoAnios,
     tasaAnual,
-  ).toFixed(2);
+  );
 
-  mostrarEnPantalla("spnDisponible", disponible);
-  mostrarEnPantalla("spnCapacidadPago", capacidadPago);
-  mostrarEnPantalla("spnInteresPagar", montoInteres);
+  let totalPrestamo = calcularTotalPagar(montoSolicitado, montoInteres);
+  let cuotaMensual = calcularCuotaMensual(totalPrestamo, plazoAnios);
+
+  mostrarEnPantalla("spnDisponible", disponible.toFixed(2));
+  mostrarEnPantalla("spnCapacidadPago", capacidadPago.toFixed(2));
+  mostrarEnPantalla("spnInteresPagar", montoInteres.toFixed(2));
+  mostrarEnPantalla("spnTotalPrestamo", totalPrestamo);
+  mostrarEnPantalla("spnCuotaMensual", cuotaMensual.toFixed(2));
 }
 
 function obtenerValores(id) {
