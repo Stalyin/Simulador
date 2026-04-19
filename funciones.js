@@ -54,3 +54,91 @@ function obtenerTexto(id) {
 function mostrarEnPantalla(id, valor) {
   document.getElementById(id).innerHTML = valor;
 }
+
+function limpiarError(idInput, idError) {
+  let input = obtenerTexto(idInput);
+  let error = obtenerTexto(idError);
+
+  input.classList.remove("input-invalid");
+  error.textContent = "";
+}
+
+function mostrarError(idInput, idError, mensaje) {
+  let input = obtenerTexto(idInput);
+  let error = obtenerTexto(idError);
+
+  input.classList.add("input-invalid");
+  error.textContent = mensaje;
+}
+
+function limpiarErroresFormulario() {
+  // Desktop
+  limpiarError("txtIngresos", "errorTxtIngresos");
+  limpiarError("txtEgresos", "errorTxtEgresos");
+  limpiarError("txtMonto", "errorTxtMonto");
+  limpiarError("txtPlazo", "errorTxtPlazo");
+  limpiarError("txtTasaInteres", "errorTxtTasaInteres");
+
+  // Mobile
+  limpiarError("mTxtIngresos", "errorMTxtIngresos");
+  limpiarError("mTxtEgresos", "errorMTxtEgresos");
+  limpiarError("mTxtMonto", "errorMTxtMonto");
+  limpiarError("mTxtPlazo", "errorMTxtPlazo");
+  limpiarError("mTxtTasaInteres", "errorMTxtTasaInteres");
+}
+
+function estaVacio(valor) {
+  return valor === "" || valor === null || Number.isNaN(valor);
+}
+
+function validarRequeridoNumero(idInput, idError, valor, nombreCampo) {
+  if (estaVacio(valor)) {
+    mostrarError(
+      idInput,
+      idError,
+      "El campo " + nombreCampo + " es obligatorio.",
+    );
+    return false;
+  }
+
+  return true;
+}
+
+function validarRangoNumero(
+  idInput,
+  idError,
+  valor,
+  minimo,
+  maximo,
+  nombreCampo,
+) {
+  if (valor < minimo || valor > maximo) {
+    mostrarError(
+      idInput,
+      idError,
+      "El campo " +
+        nombreCampo +
+        " debe estar entre " +
+        minimo +
+        " y " +
+        maximo +
+        ".",
+    );
+    return false;
+  }
+
+  return true;
+}
+
+function validarEntero(idInput, idError, valor, nombreCampo) {
+  if (!Number.isInteger(valor)) {
+    mostrarError(
+      idInput,
+      idError,
+      "El campo " + nombreCampo + " debe ser un número entero.",
+    );
+    return false;
+  }
+
+  return true;
+}

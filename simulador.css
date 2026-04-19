@@ -167,6 +167,7 @@ label {
   margin-top: 14px;
 }
 
+/* select */
 input,
 select {
   width: 100%;
@@ -280,6 +281,28 @@ input::placeholder {
     box-shadow: 0 0 0 4px rgba(31, 111, 255, 0.08);
     background: #fff;
   }
+}
+
+/* estilo de validación*/
+.input-error {
+  display: block;
+  min-height: 18px;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: #dc2626;
+  font-weight: 500;
+}
+
+.input-error:empty {
+  display: block;
+  min-height: 0;
+  margin-top: 0;
+}
+
+.input-invalid {
+  border: 1px solid #dc2626 !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.08) !important;
+  background: #fff7f7;
 }
 
 /* Botones */
