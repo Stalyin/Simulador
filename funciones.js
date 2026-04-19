@@ -1,15 +1,3 @@
-function obtenerValores(id) {
-  return parseFloat(document.getElementById(id).value);
-}
-
-function obtenerValorEntero(id) {
-  return parseInt(document.getElementById(id).value);
-}
-
-function mostrarEnPantalla(id, valor) {
-  document.getElementById(id).innerHTML = valor;
-}
-
 function calcularDisponible(ingresos, egresos) {
   let valorDisponible = 0;
   valorDisponible = ingresos - egresos;
@@ -57,6 +45,10 @@ function obtenerValores(id) {
 
 function obtenerValorEntero(id) {
   return parseInt(document.getElementById(id).value);
+}
+
+function obtenerTexto(id) {
+  return document.getElementById(id);
 }
 
 function mostrarEnPantalla(id, valor) {
