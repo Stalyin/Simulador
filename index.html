@@ -56,19 +56,40 @@
                 <h2>Datos financieros</h2>
 
                 <label for="txtIngresos">Ingresos mensuales</label>
-                <input type="number" id="txtIngresos" placeholder="Ej: 1200" />
+                <input type="number" id="txtIngresos" placeholder="Ej: 1200" onblur="validarCampoDesktop('txtIngresos','errorTxtIngresos','ingresos mensuales',1,100000)" />
                 <small class="input-error" id="errorTxtIngresos"></small>
 
-                <label for="txtEgresos">Egresos mensuales</label>
-                <input type="number" id="txtEgresos" placeholder="Ej: 450" />
-                <small class="input-error" id="errorTxtEgresos"></small>
+                <div class="egresos-section">
+                 <div>
+                    <label label for="txtArriendo">Arriendo</label>
+                    <input type="number" id="txtArriendo" placeholder="Ej: 450" onblur="validarCampoDesktop('txtArriendo','errorTxtArriendo','',1,100000)"/>
+                    <small class="input-error" id="errorTxtArriendo"></small>
+                 </div>
+
+                <div>
+                  <label for="txtAlimentacion">Alimentación</label>
+                  <input type="number" id="txtAlimentacion" placeholder="Ej: 250" onblur="validarCampoDesktop('txtAlimentacion','errorTxtAlimentacion','',1,100000)"/> 
+                  <small class="input-error" id="errorTxtAlimentacion"></small>
+                </div>
+
+                <div>
+                    <label for="txtVarios">Varios</label>
+                    <input type="number" id="txtVarios" placeholder="Ej: 100" onblur="validarCampoDesktop('txtVarios','errorTxtVarios','',1,100000)"/> 
+                    <small class="input-error" id="errorTxtVarios"></small>
+                </div>
+                </div>
+
+                <div class="result-item" style="margin-top: 15px;">
+                    <span>Egresos Totales</span>
+                    <strong id="spnEgresosTotales">$0.00</strong>
+                </div>
 
                 <div class="panel-divider"></div>
 
                 <h2>Solicitud de crédito</h2>
 
                 <label for="txtMonto">Monto solicitado</label>
-                <input type="number" id="txtMonto" placeholder="Ej: 5000" />
+                <input type="number" id="txtMonto" placeholder="Ej: 5000" onblur="validarCampoDesktop('txtMonto','errorTxtMonto','Monto solicitado',1,100000)" />
                 <small class="input-error" id="errorTxtMonto"></small>
 
                 <label for="txtPlazo">Plazo</label>
@@ -84,7 +105,7 @@
                 <small class="input-error" id="errorTxtPlazo"></small>
 
                 <label for="txtTasaInteres">Tasa de interés anual (%)</label>
-                <input type="number" id="txtTasaInteres" placeholder="Ej: 5.99" step="0.01" />
+                <input type="number" id="txtTasaInteres" placeholder="Ej: 5.99" step="0.01" onblur="validarCampoDesktop('txtTasaInteres','errorTxtTasaInteres','Tasa Interés',1,100000)" />
                 <small class="input-error" id="errorTxtTasaInteres"></small>
 
                 <div class="button-row">
@@ -167,12 +188,20 @@
                 </div>
 
                 <label for="mTxtIngresos">Ingresos mensuales</label>
-                <input type="number" id="mTxtIngresos" placeholder="Ej: 1200" />
+                <input type="number" id="mTxtIngresos" placeholder="Ej: 1200" onblur="validarCampoMobile('mTxtIngresos','errorMTxtIngresos','ingresos mensuales',1,100000)" />
                 <small class="input-error" id="errorMTxtIngresos"></small>
 
-                <label for="mTxtEgresos">Egresos mensuales</label>
-                <input type="number" id="mTxtEgresos" placeholder="Ej: 450" />
-                <small class="input-error" id="errorMTxtEgresos"></small>
+                <label for="mTxtArriendo">Arriendo</label>
+                <input type="number" id="mTxtArriendo" placeholder="Ej: 450"  onblur="validarCampoMobile('mTxtArriendo','errorMTxtArriendo','arriendo',0,100000)" />
+                <small class="input-error" id="errorMTxtArriendo"></small>
+
+                <label for="mTxtAlimentacion">Alimentación</label>
+                <input type="number" id="mTxtAlimentacion" placeholder="Ej: 250" onblur="validarCampoMobile('mTxtAlimentacion','errorMTxtAlimentacion','alimentación',0,100000)"/>
+                <small class="input-error" id="errorMTxtAlimentacion"></small>
+
+                <label for="mTxtVarios">Varios</label>
+                <input type="number" id="mTxtVarios" placeholder="Ej: 100" onblur="validarCampoMobile('mTxtVarios','errorMTxtVarios','varios',0,100000)"/>
+                <small class="input-error" id="errorMTxtVarios"></small>
 
                 <button class="btn btn--dark btn--full" type="button" onclick="validarPaso1Mobile()">
                   Siguiente
@@ -189,7 +218,7 @@
                 </div>
 
                 <label for="mTxtMonto">Monto solicitado</label>
-                <input type="number" id="mTxtMonto" placeholder="Ej: 5000" />
+                <input type="number" id="mTxtMonto" placeholder="Ej: 5000" onblur="validarCampoMobile('mTxtMonto','errorMTxtMonto','monto solicitado',100,100000)"/>
                 <small class="input-error" id="errorMTxtMonto"></small>
 
                 <label for="mTxtPlazo">Plazo en años</label>
@@ -202,7 +231,7 @@
                 <small class="input-error" id="errorMTxtPlazo"></small>
 
                 <label for="mTxtTasaInteres">Tasa de interés anual (%)</label>
-                <input type="number" id="mTxtTasaInteres" placeholder="Ej: 5.99" step="0.01" />
+                <input type="number" id="mTxtTasaInteres" placeholder="Ej: 5.99" step="0.01" onblur="validarCampoMobile('mTxtTasaInteres','errorMTxtTasaInteres','tasa de interés',1,100)"/>
                 <small class="input-error" id="errorMTxtTasaInteres"></small>
 
                 <div class="button-row mobile-actions">
@@ -227,6 +256,16 @@
                   <h2>Datos financieros</h2>
 
                   <div class="result-item">
+                    <span>Ingresos Totales</span>
+                    <strong id="mSpnIngresosTotales">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
+                    <span>Egresos Totales</span>
+                    <strong id="mSpnEgresosTotales">$0.00</strong>
+                  </div>
+
+                  <div class="result-item">
                     <span>Disponible</span>
                     <strong id="mSpnDisponible">$0.00</strong>
                   </div>
@@ -235,7 +274,10 @@
                     <span>Capacidad de pago</span>
                     <strong id="mSpnCapacidadPago">$0.00</strong>
                   </div>
+
                 </div>
+
+                
 
                 <div class="mobile-card mobile-card--results">
                   <h2>Resultados del crédito</h2>

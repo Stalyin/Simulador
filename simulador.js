@@ -2,9 +2,10 @@ function calcular() {
   limpiarErroresFormulario();
 
   let ingresos = obtenerValores("txtIngresos");
-  let egresos = obtenerValores("txtEgresos");
-  let disponible = calcularDisponible(ingresos, egresos);
-  let capacidadPago = calcularCapacidadPago(disponible);
+  let arriendo = obtenerValores("txtArriendo");
+  let alimentacion = obtenerValores("txtAlimentacion");
+  let varios = obtenerValores("txtVarios");
+
   // Solicitud de crédito
   let montoSolicitado = obtenerValorEntero("txtMonto");
   let plazoAnios = obtenerValorEntero("txtPlazo");
@@ -25,13 +26,23 @@ function calcular() {
   }
 
   if (
+    !validarRequeridoNumero("txtArriendo", "errorTxtArriendo", arriendo, "")
+  ) {
+    formularioValido = false;
+  }
+
+  if (
     !validarRequeridoNumero(
-      "txtEgresos",
-      "errorTxtEgresos",
-      egresos,
-      "egresos mensuales",
+      "txtAlimentacion",
+      "errorTxtAlimentacion",
+      alimentacion,
+      "",
     )
   ) {
+    formularioValido = false;
+  }
+
+  if (!validarRequeridoNumero("txtVarios", "errorTxtVarios", varios, "")) {
     formularioValido = false;
   }
 
@@ -79,15 +90,45 @@ function calcular() {
     }
   }
 
-  if (!estaVacio(egresos)) {
+  if (!estaVacio(arriendo)) {
     if (
       !validarRangoNumero(
-        "txtEgresos",
-        "errorTxtEgresos",
-        egresos,
+        "txtArriendo",
+        "errorTxtArriendo",
+        arriendo,
         0,
         100000,
-        "egresos mensuales",
+        "arriendo",
+      )
+    ) {
+      formularioValido = false;
+    }
+  }
+
+  if (!estaVacio(alimentacion)) {
+    if (
+      !validarRangoNumero(
+        "txtAlimentacion",
+        "errorTxtAlimentacion",
+        alimentacion,
+        0,
+        100000,
+        "alimentación",
+      )
+    ) {
+      formularioValido = false;
+    }
+  }
+
+  if (!estaVacio(varios)) {
+    if (
+      !validarRangoNumero(
+        "txtVarios",
+        "errorTxtVarios",
+        varios,
+        0,
+        100000,
+        "varios",
       )
     ) {
       formularioValido = false;
@@ -143,6 +184,7 @@ function calcular() {
     }
   }
 
+  let egresos = arriendo + alimentacion + varios;
   // Validación lógica adicional
   if (!estaVacio(ingresos) && !estaVacio(egresos)) {
     if (egresos > ingresos) {
@@ -159,6 +201,8 @@ function calcular() {
     return;
   }
 
+  let disponible = calcularDisponible(ingresos, egresos);
+  let capacidadPago = calcularCapacidadPago(disponible);
   let montoInteres = calcularInteresSimple(
     montoSolicitado,
     tasaAnual,
@@ -187,14 +231,15 @@ function calcular() {
     boxEstado.classList.add("info-box--rechazado");
   }
 
-  mostrarEnPantalla("spnDisponible", disponible.toFixed(2));
-  mostrarEnPantalla("spnCapacidadPago", capacidadPago.toFixed(2));
-  mostrarEnPantalla("spnTotalSolicitud", montoSolicitado.toFixed(2));
-  mostrarEnPantalla("spnTotalInteres", montoInteres.toFixed(2));
+  mostrarEnPantalla("spnEgresosTotales", formatearMoneda(egresos));
+  mostrarEnPantalla("spnDisponible", formatearMoneda(disponible));
+  mostrarEnPantalla("spnCapacidadPago", formatearMoneda(capacidadPago));
+  mostrarEnPantalla("spnTotalSolicitud", formatearMoneda(montoSolicitado));
+  mostrarEnPantalla("spnTotalInteres", formatearMoneda(montoInteres));
   mostrarEnPantalla("spnTotalSolca", "$100.00");
-  mostrarEnPantalla("spnInteresPagar", montoInteres.toFixed(2));
-  mostrarEnPantalla("spnTotalPrestamo", totalPrestamo);
-  mostrarEnPantalla("spnCuotaMensual", cuotaMensual.toFixed(2));
+  mostrarEnPantalla("spnInteresPagar", formatearMoneda(montoInteres));
+  mostrarEnPantalla("spnTotalPrestamo", formatearMoneda(totalPrestamo));
+  mostrarEnPantalla("spnCuotaMensual", formatearMoneda(cuotaMensual));
 }
 
 function formatearMoneda(valor) {
@@ -203,7 +248,9 @@ function formatearMoneda(valor) {
 
 function reiniciar() {
   obtenerTexto("txtIngresos").value = "";
-  obtenerTexto("txtEgresos").value = "";
+  obtenerTexto("txtArriendo").value = "";
+  obtenerTexto("txtAlimentacion").value = "";
+  obtenerTexto("txtVarios").value = "";
   obtenerTexto("txtMonto").value = "";
   obtenerTexto("txtPlazo").value = "5";
   obtenerTexto("txtTasaInteres").value = "";
@@ -213,7 +260,7 @@ function reiniciar() {
   mostrarEnPantalla("spnInteresPagar", "$0.00");
   mostrarEnPantalla("spnTotalPrestamo", "$0.00");
   mostrarEnPantalla("spnCuotaMensual", "$0.00");
-  mostrarEnPantalla("spnEstadoCredito", "ANALIZANDO...");
+  mostrarEnPantalla("spnEstadoCredito", "ANALIZANDO");
 
   let boxEstado = obtenerTexto("boxEstadoCredito");
   boxEstado.classList.remove("info-box--aprobado", "info-box--rechazado");
@@ -252,7 +299,9 @@ function validarPaso1Mobile() {
   limpiarErroresFormulario();
 
   let ingresos = obtenerValores("mTxtIngresos");
-  let egresos = obtenerValores("mTxtEgresos");
+  let arriendo = obtenerValores("mTxtArriendo");
+  let alimentacion = obtenerValores("mTxtAlimentacion");
+  let varios = obtenerValores("mTxtVarios");
 
   let pasoValido = true;
 
@@ -269,11 +318,28 @@ function validarPaso1Mobile() {
 
   if (
     !validarRequeridoNumero(
-      "mTxtEgresos",
-      "errorMTxtEgresos",
-      egresos,
-      "egresos mensuales",
+      "mTxtArriendo",
+      "errorMTxtArriendo",
+      arriendo,
+      "arriendo",
     )
+  ) {
+    pasoValido = false;
+  }
+
+  if (
+    !validarRequeridoNumero(
+      "mTxtAlimentacion",
+      "errorMTxtAlimentacion",
+      alimentacion,
+      "alimentación",
+    )
+  ) {
+    pasoValido = false;
+  }
+
+  if (
+    !validarRequeridoNumero("mTxtVarios", "errorMTxtVarios", varios, "varios")
   ) {
     pasoValido = false;
   }
@@ -293,20 +359,52 @@ function validarPaso1Mobile() {
     }
   }
 
-  if (!estaVacio(egresos)) {
+  if (!estaVacio(arriendo)) {
     if (
       !validarRangoNumero(
-        "mTxtEgresos",
-        "errorMTxtEgresos",
-        egresos,
+        "mTxtArriendo",
+        "errorMTxtArriendo",
+        arriendo,
         0,
         100000,
-        "egresos mensuales",
+        "arriendo",
       )
     ) {
       pasoValido = false;
     }
   }
+
+  if (!estaVacio(alimentacion)) {
+    if (
+      !validarRangoNumero(
+        "mTxtAlimentacion",
+        "errorMTxtAlimentacion",
+        alimentacion,
+        0,
+        100000,
+        "alimentación",
+      )
+    ) {
+      pasoValido = false;
+    }
+  }
+
+  if (!estaVacio(varios)) {
+    if (
+      !validarRangoNumero(
+        "mTxtVarios",
+        "errorMTxtVarios",
+        varios,
+        0,
+        100000,
+        "varios",
+      )
+    ) {
+      pasoValido = false;
+    }
+  }
+
+  let egresos = arriendo + alimentacion + varios;
 
   if (!estaVacio(ingresos) && !estaVacio(egresos)) {
     if (egresos > ingresos) {
@@ -425,11 +523,15 @@ function calcularMobile() {
   limpiarErroresFormulario();
 
   let ingresos = obtenerValores("mTxtIngresos");
-  let egresos = obtenerValores("mTxtEgresos");
+  let arriendo = obtenerValores("mTxtArriendo");
+  let alimentacion = obtenerValores("mTxtAlimentacion");
+  let varios = obtenerValores("mTxtVarios");
+
   let montoSolicitado = obtenerValores("mTxtMonto");
   let plazoAnios = obtenerValores("mTxtPlazoValor");
   let tasaAnual = obtenerValores("mTxtTasaInteres");
 
+  let egresos = arriendo + alimentacion + varios;
   let disponible = calcularDisponible(ingresos, egresos);
   let capacidadPago = calcularCapacidadPago(disponible);
   let montoInteres = calcularInteresSimple(
@@ -441,6 +543,8 @@ function calcularMobile() {
   let cuotaMensual = calcularCuotaMensual(totalPrestamo, plazoAnios);
   let analizarEstado = aprobarCredito(capacidadPago, cuotaMensual);
 
+  mostrarEnPantalla("mSpnIngresosTotales", formatearMoneda(ingresos));
+  mostrarEnPantalla("mSpnEgresosTotales", formatearMoneda(egresos));
   mostrarEnPantalla("mSpnDisponible", formatearMoneda(disponible));
   mostrarEnPantalla("mSpnCapacidadPago", formatearMoneda(capacidadPago));
   mostrarEnPantalla("mSpnInteresPagar", formatearMoneda(montoInteres));
@@ -471,18 +575,24 @@ function calcularMobile() {
 
 function reiniciarMobile() {
   obtenerTexto("mTxtIngresos").value = "";
-  obtenerTexto("mTxtEgresos").value = "";
+  obtenerTexto("mTxtArriendo").value = "";
+  obtenerTexto("mTxtAlimentacion").value = "";
+  obtenerTexto("mTxtVarios").value = "";
   obtenerTexto("mTxtMonto").value = "";
   obtenerTexto("mTxtTasaInteres").value = "";
   obtenerTexto("mTxtPlazoValor").value = "5";
   obtenerTexto("mTxtPlazo").value = "5 años";
 
+  mostrarEnPantalla("mSpnEgresosTotales", "$0.00");
   mostrarEnPantalla("mSpnDisponible", "$0.00");
   mostrarEnPantalla("mSpnCapacidadPago", "$0.00");
   mostrarEnPantalla("mSpnInteresPagar", "$0.00");
+  mostrarEnPantalla("mSpnTotalSolicitud", "$0.00");
+  mostrarEnPantalla("mSpnTotalInteres", "$0.00");
+  mostrarEnPantalla("mSpnTotalSolca", "$100.00");
   mostrarEnPantalla("mSpnTotalPrestamo", "$0.00");
   mostrarEnPantalla("mSpnCuotaMensual", "$0.00");
-  mostrarEnPantalla("mSpnEstadoCredito", "ANALIZANDO...");
+  mostrarEnPantalla("mSpnEstadoCredito", "ANALIZANDO");
   let boxEstado = obtenerTexto("state-box-mobile");
   boxEstado.classList.remove("info-box--aprobado", "info-box--rechazado");
   boxEstado.classList.add("info-box--analizando");

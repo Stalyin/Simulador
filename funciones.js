@@ -74,14 +74,18 @@ function mostrarError(idInput, idError, mensaje) {
 function limpiarErroresFormulario() {
   // Desktop
   limpiarError("txtIngresos", "errorTxtIngresos");
-  limpiarError("txtEgresos", "errorTxtEgresos");
+  limpiarError("txtArriendo", "errorTxtArriendo");
+  limpiarError("txtAlimentacion", "errorTxtAlimentacion");
+  limpiarError("txtVarios", "errorTxtVarios");
   limpiarError("txtMonto", "errorTxtMonto");
   limpiarError("txtPlazo", "errorTxtPlazo");
   limpiarError("txtTasaInteres", "errorTxtTasaInteres");
 
   // Mobile
   limpiarError("mTxtIngresos", "errorMTxtIngresos");
-  limpiarError("mTxtEgresos", "errorMTxtEgresos");
+  limpiarError("mTxtArriendo", "errorMTxtArriendo");
+  limpiarError("mTxtAlimentacion", "errorMTxtAlimentacion");
+  limpiarError("mTxtVarios", "errorMTxtVarios");
   limpiarError("mTxtMonto", "errorMTxtMonto");
   limpiarError("mTxtPlazo", "errorMTxtPlazo");
   limpiarError("mTxtTasaInteres", "errorMTxtTasaInteres");
@@ -98,6 +102,42 @@ function validarRequeridoNumero(idInput, idError, valor, nombreCampo) {
       idError,
       "El campo " + nombreCampo + " es obligatorio.",
     );
+    return false;
+  }
+
+  return true;
+}
+
+function validarCampoDesktop(idInput, idError, nombreCampo, minimo, maximo) {
+  let valor = obtenerValores(idInput);
+
+  limpiarError(idInput, idError);
+
+  if (!validarRequeridoNumero(idInput, idError, valor, nombreCampo)) {
+    return false;
+  }
+
+  if (
+    !validarRangoNumero(idInput, idError, valor, minimo, maximo, nombreCampo)
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+function validarCampoMobile(idInput, idError, nombreCampo, minimo, maximo) {
+  let valor = obtenerValores(idInput);
+
+  limpiarError(idInput, idError);
+
+  if (!validarRequeridoNumero(idInput, idError, valor, nombreCampo)) {
+    return false;
+  }
+
+  if (
+    !validarRangoNumero(idInput, idError, valor, minimo, maximo, nombreCampo)
+  ) {
     return false;
   }
 
